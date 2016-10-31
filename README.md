@@ -42,8 +42,16 @@ To load all translations just call:
 ```javascript
 flexlangInit('languageResource.json', 'en');
 ```
+Our HTML example after init:
+```html
+<p data-flkey="welcome_text">Welcome to our website!</p>
+```
 
 ## Load another language
 ```javascript
 flexlangReload('de');
+```
+Our HTML example after reload:
+```html
+<p data-flkey="welcome_text">Willkommen auf unserer Webseite!</p>
 ```
