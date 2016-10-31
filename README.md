@@ -55,3 +55,16 @@ Our HTML example after reload:
 ```html
 <p data-flkey="welcome_text">Willkommen auf unserer Webseite!</p>
 ```
+
+## Set translations as an attribute
+If you want your translation (for example) as a placeholder you can use the `data-fl-target` attribute. Of course you can use an attribute target you want to.
+
+Example:
+```html
+<textarea data-flkey="example_placholder_text" data-fl-target="placeholder"></textarea>
+```
+
+Result after loading:
+```html
+<textarea data-flkey="example_placholder_text" data-fl-target="placeholder" placeholder="This is just an example text! Write your own ..."></textarea>
+```
