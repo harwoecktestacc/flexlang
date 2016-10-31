@@ -1,0 +1,19 @@
+{
+    "primaryLanguage": "en",
+    "fallbackToPrimary": true,
+    "languages": [
+        {
+            "id": "en",
+            "index": 1
+        },
+        {
+            "id": "de",
+            "index": 2
+        }
+    ],
+    "keys": [
+        [ "welcome_text", "Welcome to our website!", "Willkommen auf unserer Webseite!" ],
+        [ "child_text", "This is the child's text.", "Das ist des Kindes Text! " ],
+        [ "find_text", "This is english fallback", "" ]
+    ]
+}

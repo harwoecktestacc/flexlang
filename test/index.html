@@ -1,0 +1,26 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="../src/flexlang.js"></script>
+</head>
+<body>
+    <p data-flkey="welcome_text"></p>
+    
+    <input data-flkey="welcome_text" data-fl-target="attr:placeholder">
+    
+    <div data-flkey="child_text" data-fl-target="child:p" style="background-color:red;">
+        <p></p>
+    </div>
+    
+    <div data-flkey="find_text" data-fl-target="find:p" style="background-color:red;padding:20px;">
+        <div style="background-color:blue;">
+            <p></p>
+        </div>
+    </div>
+    
+    <button onclick="flexlangReload('de');">changeLangToGerman</button>
+
+    <script>flexlangSetCustomErrorHandler(alert);flexlangInit('./flresource.json', 'en');</script>
+</body>
+</html>
