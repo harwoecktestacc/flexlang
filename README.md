@@ -44,6 +44,6 @@ flexlangInit('languageResource.json', 'en');
 ```
 
 ## Load another language
-```javascirpt
+```javascript
 flexlangReload('de');
 ```
