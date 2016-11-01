@@ -19,6 +19,9 @@ Flexlang is a JavaScript plugin which allows developer to make their total websi
 
 Not only language loading is very easy with flexlang, also the translation process itself is implemented within the plugin. With an easy function call you can create a complete UI with all current translations, which can be edited directly. To save everything flexlang calls a function from the developer with a json as parameter. In this json the complete new translation and all settings are stored. The only thing a developer need to do now is load it to a server and save it in a static file. Afterwards every user will get a new translation – automatically.
 
+## Dependencies
+jQuery
+
 
 ## Keys
 flexlang uses unique keys to search through the translation resources. Those keys are stored in the `data-flkey` attribute of the element you want the translation into.
