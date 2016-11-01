@@ -1,7 +1,7 @@
 # flexlang
 > A flexible translation plugin for JS
 
-![Build Status](https://travis-ci.org/harwoeck/flexlang.svg?branch=master)
+[![Build Status](https://travis-ci.org/harwoeck/flexlang.svg?branch=master)](https://travis-ci.org/harwoeck/flexlang)
 
 ## Keys
 flexlang uses unique keys to search through the translation resources. Those keys are stored in the `data-flkey` attribute of the element you want the translation into.
