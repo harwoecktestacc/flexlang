@@ -1,6 +1,6 @@
 <p align="center">
     <a href="#0">
-        <img src="https://raw.githubusercontent.com/harwoeck/flexlang/master/logo/logo.png" height="100px">
+        <img src="https://raw.githubusercontent.com/harwoeck/flexlang/master/logo/logo2.png" height="100px">
     </a>
     <br>
     <strong>A flexible translation plugin for modern web sites</strong>
