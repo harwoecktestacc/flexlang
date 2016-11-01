@@ -10,7 +10,8 @@
     <a href="https://travis-ci.org/harwoeck/flexlang"><img src="https://travis-ci.org/harwoeck/flexlang.svg?branch=master" alt="Build Status"></a>
     <img src="https://img.shields.io/badge/license-MIT%20license-blue.svg" alt="license">
     <img src="https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg" alt="maintenance">
-    <img src="https://img.shields.io/badge/relase-beta%20development-orange.svg" alt="release">
+    <img src="https://img.shields.io/badge/release-beta%20development-orange.svg" alt="release">
+    <img src="https://img.shields.io/badge/copyright-florian%20harwoeck%202016-red.svg" alt="copyright">
 </p>
 
 ## Introduction
