@@ -1,5 +1,11 @@
-# flexlang
-> A flexible translation plugin for JS
+<p align="center">
+    <a href="#0">
+        <img src="https://github.com/harwoeck/flexlang/logo/logo.png" height="100px">
+    </a>
+    <br>
+    <strong>A flexible translation plugin for JS</strong>
+</p>
+
 
 [![Build Status](https://travis-ci.org/harwoeck/flexlang.svg?branch=master)](https://travis-ci.org/harwoeck/flexlang)
 
