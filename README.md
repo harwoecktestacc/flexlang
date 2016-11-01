@@ -6,8 +6,12 @@
     <strong>A flexible translation plugin for modern web sites</strong>
 </p>
 
-
 [![Build Status](https://travis-ci.org/harwoeck/flexlang.svg?branch=master)](https://travis-ci.org/harwoeck/flexlang)
+[![license](https://img.shields.io/badge/license-MIT%20license-blue.svg)]()
+[![maintenance](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg)]()
+[![release](https://img.shields.io/badge/relase-beta%20development-orange.svg)]()
+
+
 
 ## Keys
 flexlang uses unique keys to search through the translation resources. Those keys are stored in the `data-flkey` attribute of the element you want the translation into.
