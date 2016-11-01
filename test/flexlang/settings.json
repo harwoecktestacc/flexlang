@@ -1,0 +1,20 @@
+{
+    "defaultLanguageId": "en",
+    "fallbackToDefaultLanguage": true,
+    "reportFallback": false,
+    "initialErrorHandler": "console.log",
+    "languages": [
+        {
+            "id": "en",
+            "index": 0
+        },
+        {
+            "id": "de",
+            "index": 1
+        }
+    ],
+    "resources": [
+        "public.json",
+        "private.json"
+    ]
+}
