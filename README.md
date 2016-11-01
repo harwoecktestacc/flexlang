@@ -3,7 +3,7 @@
         <img src="https://raw.githubusercontent.com/harwoeck/flexlang/master/logo/logo2.png" height="100px">
     </a>
     <br>
-    <strong>A flexible translation plugin for modern web sites</strong>
+    <strong>A flexible multi language plugin for modern web sites. by Florian Harwöck</strong>
 </p>
 
 [![Build Status](https://travis-ci.org/harwoeck/flexlang.svg?branch=master)](https://travis-ci.org/harwoeck/flexlang)
@@ -11,6 +11,11 @@
 [![maintenance](https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg)]()
 [![release](https://img.shields.io/badge/relase-beta%20development-orange.svg)]()
 
+
+## Introduction
+Flexlang is a JavaScript plugin which allows developer to make their total website mutli language ready in just a few steps. There aren’t any limitations in the number of languages supported by flexlang. The switch between languages occurs without using any network bandwidth or annoying reloads. The plugin is both for single pager and big web applications outstanding to use and easy to implement. The translations are split efficient across all sites to improve performance and speed for the clients.
+
+Not only language loading is very easy with flexlang, also the translation process itself is implemented within the plugin. With an easy function call you can create a complete UI with all current translations, which can be edited directly. To save everything flexlang calls a function from the developer with a json as parameter. In this json the complete new translation and all settings are stored. The only thing a developer need to do now is load it to a server and save it in a static file. Afterwards every user will get a new translation – automatically.
 
 
 ## Keys

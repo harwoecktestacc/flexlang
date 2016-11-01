@@ -1,3 +1,5 @@
+"use strict";
+
 function flexlangInit(resourcePath, initLanguageId) {
     if (initLanguageId !== undefined) {
         _fl_currentLanguageId = initLanguageId;
