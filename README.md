@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-    <a href="https://travis-ci.org/harwoeck/flexlang"><img src="https://travis-ci.org/harwoeck/flexlang.svg?branch=master" alt="Build Status"></a>
+    <a href="https://travis-ci.org/harwoeck/flexlang"><img src="https://travis-ci.org/harwoeck/flexlang.svg?branch=master" alt="build status"></a>
     <img src="https://img.shields.io/badge/license-MIT%20license-blue.svg" alt="license">
     <img src="https://img.shields.io/badge/maintained%3F-yes-brightgreen.svg" alt="maintenance">
     <img src="https://img.shields.io/badge/release-beta%20development-orange.svg" alt="release">
@@ -15,13 +15,15 @@
 </p>
 
 ## Introduction
-Flexlang is a JavaScript plugin which allows developers to make their total website mutli language ready in just a few steps. Not only language loading is very easy with flexlang, also the translation process itself is implemented within the plugin. With an easy function call you can create a complete UI with all current translations, which can be edited directly.
+flexlang is a JavaScript plugin which allows developers to make their total website mutli language ready in just a few steps. Not only multi language loading is supported, also the process of translation itself is implemented within the plugin. For this a complete modern UI with all current translations, which can be edited directly, is rendered.
 
 ### Advantages
-* There aren’t any limitations in the number of languages supported by flexlang.
-* The switch between languages occurs without using any network bandwidth or annoying reloads.
-* The plugin is both for single pager and big web applications easy to implement.
-* The translations are split efficient across multiple files to improve performance and load times for the clients.
+* The switch between languages occurs without using any network bandwidth or annoying website reloads
+* The plugin is both for single pager and big web applications easy and fast to implement
+* There aren’t any limitations in the number of languages supported
+* The translations are split efficient across multiple files to improve performance and load times for the clients
+* Improves page loads (Browser caching translation resource files)
+* Transfer the process of searching the right translation to your clients instead of doing it on your server
 
 ## Keys
 flexlang uses unique keys to search through the translation resources. Those keys are stored in the `data-flkey` attribute of the element you want the translation into.
