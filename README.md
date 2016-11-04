@@ -15,13 +15,13 @@
 </p>
 
 ## Introduction
-Flexlang is a JavaScript plugin which allows developers to make their total website mutli language ready in just a few steps. There aren’t any limitations in the number of languages supported by flexlang. The switch between languages occurs without using any network bandwidth or annoying reloads. The plugin is both for single pager and big web applications outstanding to use and easy to implement. The translations are split efficient across all sites to improve performance and speed for the clients.
+Flexlang is a JavaScript plugin which allows developers to make their total website mutli language ready in just a few steps. Not only language loading is very easy with flexlang, also the translation process itself is implemented within the plugin. With an easy function call you can create a complete UI with all current translations, which can be edited directly.
 
-Not only language loading is very easy with flexlang, also the translation process itself is implemented within the plugin. With an easy function call you can create a complete UI with all current translations, which can be edited directly. To save everything flexlang calls a function from the developer with a json as parameter. In this json the complete new translation and all settings are stored. The only thing a developer need to do now is load it to a server and save it in a static file. Afterwards every user will get a new translation – automatically.
-
-## Dependencies
-jQuery
-Bootstrap CSS for UI 
+## Advantages
+* There aren’t any limitations in the number of languages supported by flexlang.
+* The switch between languages occurs without using any network bandwidth or annoying reloads.
+* The plugin is both for single pager and big web applications easy to implement.
+* The translations are split efficient across multiple files to improve performance and load times for the clients.
 
 ## Keys
 flexlang uses unique keys to search through the translation resources. Those keys are stored in the `data-flkey` attribute of the element you want the translation into.
@@ -32,27 +32,11 @@ Example:
 ```
 
 ## Resources
-flexlang uses a json format in which all translations and settings are stored.
-* `primaryLanguage` = Should be the `id` you give your primary language in the `languages` section.
-* `fallbackToPrimary` = If a user request the german language but you haven't set the translation of this key for german yet, this setting will decide if flexlang loads the english version as JUST for the elemt where the german language isn't available or if the user will see a white space.
-* `languages` = Set a unique identifier `id` for each language. Most common is the usage of two character country codes. The index property is the index of the translation in the `keys` array. Index 0 is reserved for the key itself.
-* `keys` = A list of arrays with include the key (at index 0) and translations afterwards.
+flexlang uses a json format in which all translations are stored in a list called `keys`. In this list each translation has a single string array. Index 0 of the array is the key of the translation itself. Afterwards all translated texts are placed.
 
-Example resource file:
+Example:
 ```json
 {
-  "primaryLanguage": "en",
-  "fallbackToPrimary": true,
-  "languages": [
-    {
-      "id": "en",
-      "index": 1
-    },
-    {
-      "id": "de",
-      "index": 2
-    }
-  ],
   "keys": [
     ["welcome_text", "Welcome to our website!", "Willkommen auf unserer Webseite!"]
   ]
@@ -60,33 +44,57 @@ Example resource file:
 ```
 
 ## Load translations
-To load all translations just call:
 ```javascript
-flexlangInit('languageResource.json', 'en');
-```
-Our HTML example after init:
-```html
-<p data-flkey="welcome_text">Welcome to our website!</p>
+flexlangInit({
+    resources: [
+        "./flexlang/public.json",
+        "./flexlang/admin.json"
+    ],
+    languages: [
+        {
+            id: "en",
+            index: 0
+        },
+        {
+            id: "de",
+            index: 1
+        }
+    ],
+
+    defaultLanguage: "en",
+    fallbackToDefaultLanguage: true,
+    reportFallback: true
+});
 ```
 
-## Load another language
+## Change language
 ```javascript
-flexlangReload('de');
-```
-Our HTML example after reload:
-```html
-<p data-flkey="welcome_text">Willkommen auf unserer Webseite!</p>
+flexlangChangeLanguage('de');
 ```
 
-## Set translations as an attribute
-If you want your translation (for example) as a placeholder you can use the `data-fl-target` attribute. Of course you can use an attribute target you want to.
+## Dependencies
+* jQuery
+* Bootstrap CSS (only if UI is needed) 
 
-Example:
-```html
-<textarea data-flkey="example_placholder_text" data-fl-target="placeholder"></textarea>
-```
+## License 
+MIT License
 
-Result after loading:
-```html
-<textarea data-flkey="example_placholder_text" data-fl-target="placeholder" placeholder="This is just an example text! Write your own ..."></textarea>
-```
+Copyright (c) 2016 Florian Harwöck
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
