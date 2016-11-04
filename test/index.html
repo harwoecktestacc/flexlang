@@ -18,9 +18,11 @@
             <p></p>
         </div>
     </div>
-    
-    <button onclick="flexlangReload('de');">changeLangToGerman</button>
 
-    <script>flexlangSetCustomErrorHandler(alert);flexlangInit('./flresource.json', 'en');</script>
+    <button data-flkey="admin_text"></button>
+    
+    <button onclick="flexlangChangeLanguage('de');">changeLangToGerman</button>
+
+    <script src="./init.js"></script>
 </body>
 </html>

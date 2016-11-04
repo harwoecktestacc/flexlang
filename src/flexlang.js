@@ -1,37 +1,48 @@
 "use strict";
 
-function flexlangInit(resourcePath, initLanguageId) {
-    if (initLanguageId !== undefined) {
-        _fl_currentLanguageId = initLanguageId;
-        _fl_downloadResource(resourcePath, _fl_changeLanguageToCurrentLanguage);
+function flexlangInit(init) {
+    if (init.customErrorHandler !== undefined) {
+        flexlangSetCustomErrorHandler(init.customErrorHandler);
     }
-    else
-        _fl_downloadResource(resourcePath, _fl_changeLanguageToDefaultLanguage);
-}
-function flexlangChangeLanguage(languageId) {
-    if (_fl_resource === undefined) {
-        _fl_errorHandler('[flexlang.js] Can\'t change language without resource file! Please call "flexlangInit(resourcePath, initLanguageId)" first!');
+    if (init.resources === undefined) {
+        _fl_printError_invpara('resources');
         return;
     }
-    _fl_currentLanguageId = languageId;
+    if (init.languages === undefined) {
+        _fl_printError_invpara('languages');
+        return;
+    }
+    _fl_init = init;
+    _fl_resDownCounter = 0;
+    _fl_resDownFinishedCallback = _fl_initSecondPart;
+    _fl_resources = Array(_fl_init.resources.length);
+    for (var i = 0; i < _fl_init.resources.length; i++)
+        _fl_download(_fl_init.resources[i], i, _fl_downloadIncrease);
+}
+function flexlangChangeLanguage(languageId) {
+    if (_fl_init === undefined) {
+        _fl_printError_noinit('change language');
+        return;
+    }
+    _fl_currentLanguage = languageId;
     var all = $('[data-flkey]');
     for (var i = 0; i < all.length; i++) {
         var key = all[i].getAttribute('data-flkey');
         var trans = _fl_getTranslation(languageId, key);
         if (trans === undefined) {
-            _fl_errorHandler('[flexlang.js] Unable to resolve tranlation key: "' + key + '" for language: "' + languageId + '"');
+            _fl_printError_notrans(key, languageId);
             $(all[i]).html('');
             continue;
         }
         else if (trans === null) {
-            _fl_errorHandler('[flexlang.js] Language: "' + languageId + '" not defined in resources.');
+            _fl_printError_nolangdef(languageId);
             return;
         }
         if (all[i].hasAttribute('data-fl-target')) {
             var target = all[i].getAttribute('data-fl-target');
             var targetInfo = target.split(':');
             if (targetInfo.length !== 2) {
-                _fl_errorHandler('[flexlang.js] Unkown syntax for \'data-fl-target\' attribute. See https://github.com/harwoeck/flexlang for more information.');
+                _fl_printError_attrSyn();
                 continue;
             }
             else {
@@ -42,106 +53,121 @@ function flexlangChangeLanguage(languageId) {
                         break;
                     case 'find': $(all[i]).find(targetInfo[1]).html(trans);
                         break;
-                    default: _fl_errorHandler('[flexlang.js] Unkown syntax for \'data-fl-target\' attribute. See https://github.com/harwoeck/flexlang for more information.');
-                        break;
+                    default: _fl_printError_attrSyn();
+                        continue;
                 }
             }
         }
         else 
             $(all[i]).html(trans);
-        all[i].setAttribute('data-flkey-language', _fl_currentLanguageId);
     }
 }
 function flexlangTranslate(key, languageId) {
-    if (_fl_resource === undefined) {
-        _fl_errorHandler('[flexlang.js] Can\'t load language without resource file! Please call \'flexlangInit(path, initLang)\' first!');
+    if (_fl_init === undefined) {
+        _fl_printError_noinit('load translation');
         return;
     }
-    var trans;
-    if (languageId !== undefined)
-        trans = _fl_getTranslation(languageId, key);
-    else
-        trans = _fl_getTranslation(_fl_currentLanguageId, key);
+    var trans = _fl_getTranslation(languageId, key);
     if (trans === undefined) {
-        _fl_errorHandler('[flexlang.js] Unable to resolve tranlation key: "' + key + '" for language: "' + lang + '"');
+        _fl_printError_notrans(key, lang);
         return undefined;
     }
     else if (trans === null) {
-        _fl_errorHandler('[flexlang.js] Language: "' + lang + '" not defined in resources.');
+        _fl_printError_nolangdef(lang);
         return undefined;
     }
     return trans;
 }
-function flexlangGetAvailableLanguages() {
-    if (_fl_resource === undefined) {
-        _fl_errorHandler('[flexlang.js] Can\'t load available languages without resource file! Please call \'flexlangInit(path, initLang)\' first!');
-        return;
-    }
-    return _fl_resource.languages;
-}
 function flexlangSetCustomErrorHandler(callback) {
     _fl_errorHandler = callback;
-}
-function flexlangReloadResource() {
-    if (_fl_resource === undefined) {
-        _fl_errorHandler('[flexlang.js] Can\'t sync resource file without path! Please call \'flexlangInit(path, initLang)\' first!');
-        return;
-    }
-    _fl_downloadResource(_fl_resourcePath, _fl_changeLanguageToCurrentLanguage);
-}
-function flexlangChangeResource(resourcePath) {
-    _fl_downloadResource(resourcePath, _fl_changeLanguageToCurrentLanguage);
 }
 
 /*
  * PRIVATE 
  */
-var _fl_resource;
-var _fl_resourcePath;
-var _fl_currentLanguageId;
+var _fl_init;
 var _fl_errorHandler = console.log;
-function _fl_downloadResource(resourcePath, finishedCallback) {
-    _fl_resourcePath = resourcePath;
-    $.get(resourcePath, function(data) {
-        _fl_resource = data;
-        if (finishedCallback !== undefined)
-            finishedCallback();
+var _fl_githubrepo = 'https://github.com/harwoeck/flexlang';
+var _fl_resDownCounter;
+var _fl_resDownFinishedCallback;
+var _fl_resources;
+var _fl_currentLanguage;
+
+function _fl_printError(action, without) {
+    _fl_errorHandler('[flexlang.js] Can\'t ' + action + ' without ' + without + '. See ' + _fl_githubrepo + ' for more information.');
+}
+function _fl_printError_invpara(without) {
+    _fl_printError('initialize flexlang', without);
+    flexlangSetCustomErrorHandler(console.log);
+}
+function _fl_printError_noinit(action) {
+    _fl_printError(action, 'initialization');
+}
+function _fl_printError_notrans(key, lang) {
+    _fl_errorHandler('[flexlang.js] Unable to resolve tranlation for key: "' + key + '" in language: "' + lang + '".');
+}
+function _fl_printError_nolangdef(lang) {
+    _fl_errorHandler('[flexlang.js] Language: "' + lang + '" not defined in resources.');
+}
+function _fl_printError_attrSyn() {
+    _fl_errorHandler('[flexlang.js] Unkown syntax for "data-fl-target" attribute. See ' + _fl_githubrepo + ' for more information.');
+}
+
+function _fl_download(path, index, callback) {
+    $.get(path, function(data) {
+        _fl_resources[index] = data;
+        if (callback !== undefined)
+            callback();
     }, "json");
 }
-function _fl_changeLanguageToCurrentLanguage() {
-    flexlangChangeLanguage(_fl_currentLanguageId);
+function _fl_downloadIncrease() {
+    _fl_resDownCounter++;
+    if (_fl_resDownCounter === _fl_init.resources.length) {
+        var temp = _fl_resDownFinishedCallback;
+        _fl_resDownCounter = 0;
+        _fl_resDownFinishedCallback = undefined;
+        temp();
+    }
 }
-function _fl_changeLanguageToDefaultLanguage() {
-    flexlangChangeLanguage(_fl_resource.defaultLanguageId);
+function _fl_initSecondPart() {
+    if (_fl_init.defaultLanguage !== undefined)
+        flexlangChangeLanguage(_fl_init.defaultLanguage);
+    else {
+        _fl_init.defaultLanguage = _fl_resources.languages[0].id;
+        flexlangChangeLanguage(_fl_init.defaultLanguage);
+    }
 }
+
 function _fl_getTranslation(languageId, key) {
     var langIndex = -1;
-    for (var i = 0; i < _fl_resource.languages.length; i++)
-        if (_fl_resource.languages[i].id === languageId) {
-            langIndex = _fl_resource.languages[i].index;
+    for (var i = 0; i < _fl_init.languages.length; i++)
+        if (_fl_init.languages[i].id === languageId) {
+            langIndex = _fl_init.languages[i].index;
             break;
         }
     if (langIndex === -1)
         return null;
-    for (var i = 0; i < _fl_resource.keys.length; i++) {
-        if (_fl_resource.keys[i][0] === key) {
-            var trans = _fl_resource.keys[i][langIndex];
-            var isValidTranslation = false;
-            if (trans !== '') {
-                for (var i = 0; i < trans.length; i++)
-                    if (trans[i] !== ' ') {
-                        isValidTranslation = true;
-                        break;
-                    }
-                if (isValidTranslation)
-                    return trans;
+    for (var u = 0; u < _fl_resources.length; u++) {
+        for (var i = 0; i < _fl_resources[u].keys.length; i++) {
+            if (_fl_resources[u].keys[i][0] === key) {
+                var trans = _fl_resources[u].keys[i][langIndex + 1];
+                var isValidTranslation = false;
+                if (trans !== '') {
+                    for (var i = 0; i < trans.length; i++)
+                        if (trans[i] !== ' ') {
+                            isValidTranslation = true;
+                            break;
+                        }
+                    if (isValidTranslation)
+                        return trans;
+                }
+                if (_fl_init.defaultLanguage !== languageId && _fl_init.fallbackToDefaultLanguage) {
+                    if (_fl_init.reportFallback)
+                        _fl_errorHandler('[flexlang.js] No translation for key: "' + key + '" in language: "' + languageId + '". Use fallback to "' + _fl_init.defaultLanguage  + '".');
+                    return _fl_getTranslation(_fl_init.defaultLanguage, key);
+                }
+                return undefined;
             }
-            if (_fl_resource.defaultLanguageId !== languageId && _fl_resource.fallbackToDefaultLanguage) {
-                if (_fl_resource.reportFallback)
-                    _fl_errorHandler('[flexlang.js] No translation for key: "' + key + '" in language: "' + languageId + '". Use fallback to "' + _fl_resource.defaultLanguageId  + '".');
-                return _fl_getTranslation(_fl_resource.defaultLanguageId, key);
-            }
-            return undefined;
         }
     }
 }
