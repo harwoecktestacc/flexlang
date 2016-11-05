@@ -18,5 +18,7 @@ flexlangInit({
 
     defaultLanguage: "en",
     fallbackToDefaultLanguage: true,
-    reportFallback: true
+    reportFallback: true,
+
+    customKeyAttribute: "flkey"
 });

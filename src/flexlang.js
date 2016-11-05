@@ -25,9 +25,14 @@ function flexlangChangeLanguage(languageId) {
         return;
     }
     _fl_currentLanguage = languageId;
-    var all = $('[data-flkey]');
+
+    var dataAttrName = 'data-flkey';
+    if (_fl_init.customKeyAttribute !== undefined)
+        dataAttrName = 'data-' + _fl_init.customKeyAttribute;
+        
+    var all = $('[' + dataAttrName + ']');
     for (var i = 0; i < all.length; i++) {
-        var key = all[i].getAttribute('data-flkey');
+        var key = all[i].getAttribute(dataAttrName);
         var trans = _fl_getTranslation(languageId, key);
         if (trans === undefined) {
             _fl_printError_notrans(key, languageId);
