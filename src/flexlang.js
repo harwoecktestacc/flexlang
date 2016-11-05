@@ -92,6 +92,7 @@ var _fl_resDownCounter;
 var _fl_resDownFinishedCallback;
 var _fl_resources;
 var _fl_currentLanguage;
+var _fl_invalidResources;
 
 function _fl_printError(action, without) {
     _fl_errorHandler('[flexlang.js] Can\'t ' + action + ' without ' + without + '. See ' + _fl_githubrepo + ' for more information.');
@@ -150,12 +151,17 @@ function _fl_getTranslation(languageId, key) {
     for (var u = 0; u < _fl_resources.length; u++) {
         for (var i = 0; i < _fl_resources[u].keys.length; i++) {
             if (_fl_resources[u].keys[i].length !== _fl_init.languages.length + 1) {
-                var key = _fl_resources[u].keys[i].length > 0
-                    ? _fl_resources[u].keys[i][0] !== undefined && _fl_resources[u].keys[i][0] !== null
-                        ? '"' + _fl_resources[u].keys[i][0] + '"'
-                        : 'undefined'
-                    : 'undefined';
-                _fl_errorHandler('[flexlang.js] Invalid translation array. Key: ' + key + '. Origin: Resource-Index(' + u + ') Key-Index(' + i + ').');
+                var report = 'undefined';
+                var isSearchedKey = false;
+                if (_fl_resources[u].keys[i].length > 0)
+                    if (_fl_resources[u].keys[i][0] !== undefined && _fl_resources[u].keys[i][0] !== null) {
+                        report = '"' + _fl_resources[u].keys[i][0] + '"';
+                        if (_fl_resources[u].keys[i][0] === key)
+                            isSearchedKey = true;
+                    }
+                _fl_printInvalidResourceError(report, u, i);
+                if (isSearchedKey)
+                    return undefined;
                 continue;
             }
             if (_fl_resources[u].keys[i][0] === key) {
@@ -175,8 +181,27 @@ function _fl_getTranslation(languageId, key) {
                         _fl_errorHandler('[flexlang.js] No translation for key: "' + key + '" in language: "' + languageId + '". Use fallback to "' + _fl_init.defaultLanguage  + '".');
                     return _fl_getTranslation(_fl_init.defaultLanguage, key);
                 }
-                return undefined;
             }
         }
+    }
+    return undefined;
+}
+
+function _fl_printInvalidResourceError(report, u, i) {
+    var alreadyPrinted = false;
+    if (_fl_invalidResources !== undefined)
+        for (var k = 0; k < _fl_invalidResources.length; k++) {
+            if (_fl_invalidResources[k][0] === u && _fl_invalidResources[k][1] === i) {
+                alreadyPrinted = true;
+                break;
+            }
+        }
+    if (!alreadyPrinted) {
+        if (_fl_invalidResources === undefined)
+            _fl_invalidResources = Array();
+        _fl_invalidResources[_fl_invalidResources.length] = Array(2);
+        _fl_invalidResources[_fl_invalidResources.length - 1][0] = u;
+        _fl_invalidResources[_fl_invalidResources.length - 1][1] = i;
+        _fl_errorHandler('[flexlang.js] Invalid translation array. Key: ' + report + '. Origin: Resource-Index(' + u + ') Key-Index(' + i + ').');
     }
 }
