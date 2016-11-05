@@ -85,7 +85,18 @@ function flexlangTranslate(key, languageId) {
     return trans;
 }
 function flexlangSetCustomErrorHandler(callback) {
+    if (_fl_init === undefined) {
+        _fl_printError_noinit('set custom error handler');
+        return;
+    }
     _fl_errorHandler = callback;
+}
+function flexlangGetCurrentLangauge() {
+    if (_fl_init === undefined) {
+        _fl_printError_noinit('load translation');
+        return;
+    }
+    return _fl_currentLanguage;
 }
 
 /*
