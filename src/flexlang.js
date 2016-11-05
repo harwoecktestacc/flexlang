@@ -149,6 +149,15 @@ function _fl_getTranslation(languageId, key) {
         return null;
     for (var u = 0; u < _fl_resources.length; u++) {
         for (var i = 0; i < _fl_resources[u].keys.length; i++) {
+            if (_fl_resources[u].keys[i].length !== _fl_init.languages.length + 1) {
+                var key = _fl_resources[u].keys[i].length > 0
+                    ? _fl_resources[u].keys[i][0] !== undefined && _fl_resources[u].keys[i][0] !== null
+                        ? '"' + _fl_resources[u].keys[i][0] + '"'
+                        : 'undefined'
+                    : 'undefined';
+                _fl_errorHandler('[flexlang.js] Invalid translation array. Key: ' + key + '. Origin: Resource-Index(' + u + ') Key-Index(' + i + ').');
+                continue;
+            }
             if (_fl_resources[u].keys[i][0] === key) {
                 var trans = _fl_resources[u].keys[i][langIndex + 1];
                 var isValidTranslation = false;
