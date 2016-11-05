@@ -91,7 +91,7 @@ function flexlangSetCustomErrorHandler(callback) {
     }
     _fl_errorHandler = callback;
 }
-function flexlangGetCurrentLangauge() {
+function flexlangGetCurrentLanguage() {
     if (_fl_init === undefined) {
         _fl_printError_noinit('get current language');
         return;
