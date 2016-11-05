@@ -72,7 +72,8 @@ function flexlangTranslate(key, languageId) {
         _fl_printError_noinit('load translation');
         return;
     }
-    var trans = _fl_getTranslation(languageId, key);
+    var lang = languageId === undefined ? _fl_currentLanguage : languageId;
+    var trans = _fl_getTranslation(lang, key);
     if (trans === undefined) {
         _fl_printError_notrans(key, lang);
         return undefined;
