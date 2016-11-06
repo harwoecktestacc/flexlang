@@ -151,8 +151,8 @@ function _fl_initSecondPart() {
     if (_fl_init.saveLanguageDuringReload) {
         var temp = _fl_getCookie('flexlang_language');
         if (temp !== '') {
-            if (_fl_init.defaultLanguage !== undefined)
-                _fl_init.defaultLanguage = _fl_resources.languages[0].id;
+            if (_fl_init.defaultLanguage === undefined)
+                _fl_init.defaultLanguage = _fl_init.languages[0].id;
             flexlangChangeLanguage(temp);
             return;
         }
@@ -160,7 +160,7 @@ function _fl_initSecondPart() {
     if (_fl_init.defaultLanguage !== undefined)
         flexlangChangeLanguage(_fl_init.defaultLanguage);
     else {
-        _fl_init.defaultLanguage = _fl_resources.languages[0].id;
+        _fl_init.defaultLanguage = _fl_init.languages[0].id;
         flexlangChangeLanguage(_fl_init.defaultLanguage);
     }
 }
