@@ -24,7 +24,7 @@ function flexlangChangeLanguage(languageId) {
         _fl_printError_noinit('change language');
         return;
     }
-    _fl_currentLanguage = languageId;
+    _fl_changeCurrentLang(languageId);
 
     var dataAttrName = 'data-flkey';
     if (_fl_init.customKeyAttribute !== undefined)
@@ -148,6 +148,15 @@ function _fl_downloadIncrease() {
     }
 }
 function _fl_initSecondPart() {
+    if (_fl_init.saveLanguageDuringReload) {
+        var temp = _fl_getCookie('flexlang_language');
+        if (temp !== '') {
+            if (_fl_init.defaultLanguage !== undefined)
+                _fl_init.defaultLanguage = _fl_resources.languages[0].id;
+            flexlangChangeLanguage(temp);
+            return;
+        }
+    }
     if (_fl_init.defaultLanguage !== undefined)
         flexlangChangeLanguage(_fl_init.defaultLanguage);
     else {
@@ -221,4 +230,31 @@ function _fl_printInvalidResourceError(report, u, i) {
         _fl_invalidResources[_fl_invalidResources.length - 1][1] = i;
         _fl_errorHandler('[flexlang.js] Invalid translation array. Key: ' + report + '. Origin: Resource-Index(' + u + ') Key-Index(' + i + ').');
     }
+}
+
+function _fl_setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function _fl_getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function _fl_changeCurrentLang(currentLang) {
+    if (_fl_init.saveLanguageDuringReload)
+        _fl_setCookie("flexlang_language", currentLang, 365);
+    _fl_currentLanguage = currentLang;
 }
