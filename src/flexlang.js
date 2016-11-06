@@ -148,20 +148,26 @@ function _fl_downloadIncrease() {
     }
 }
 function _fl_initSecondPart() {
-    if (_fl_init.saveLanguageDuringReload) {
-        var temp = _fl_getCookie('flexlang_language');
-        if (temp !== '') {
-            if (_fl_init.defaultLanguage === undefined)
-                _fl_init.defaultLanguage = _fl_init.languages[0].id;
-            flexlangChangeLanguage(temp);
-            return;
+    try {
+        if (_fl_init.saveLanguageDuringReload) {
+            var temp = _fl_getCookie('flexlang_language');
+            if (temp !== '') {
+                if (_fl_init.defaultLanguage === undefined)
+                    _fl_init.defaultLanguage = _fl_init.languages[0].id;
+                flexlangChangeLanguage(temp);
+                return;
+            }
+        }
+        if (_fl_init.defaultLanguage !== undefined)
+            flexlangChangeLanguage(_fl_init.defaultLanguage);
+        else {
+            _fl_init.defaultLanguage = _fl_init.languages[0].id;
+            flexlangChangeLanguage(_fl_init.defaultLanguage);
         }
     }
-    if (_fl_init.defaultLanguage !== undefined)
-        flexlangChangeLanguage(_fl_init.defaultLanguage);
-    else {
-        _fl_init.defaultLanguage = _fl_init.languages[0].id;
-        flexlangChangeLanguage(_fl_init.defaultLanguage);
+    finally {
+        if (_fl_init.downloadingResourcesFinished !== undefined)
+            _fl_init.downloadingResourcesFinished();
     }
 }
 

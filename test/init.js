@@ -22,5 +22,7 @@ flexlangInit({
 
     customKeyAttribute: "flkey",
     
-    saveLanguageDuringReload: true
+    saveLanguageDuringReload: true,
+
+    downloadingResourcesFinished: undefined
 });
