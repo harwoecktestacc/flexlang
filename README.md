@@ -25,6 +25,9 @@ flexlang is a JavaScript plugin which allows developers to make their total webs
 * Improves page loads (Browser caching translation resource files)
 * Transfer the process of searching the right translation to your clients instead of doing it on your server
 
+# Live Demo
+[Live Demo from one of our users (thebotchallenge.com)](https://thebotchallenge.com)
+
 # Keys
 flexlang uses unique keys to search through the translation resources. Those keys are stored in the `data-flkey` attribute of the element you want the translation into.
 
