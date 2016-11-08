@@ -82,10 +82,10 @@ Argument | Default value | Description
 defaultLanguage | languages[0].id | This language will be loaded after downloading resources. Except: `saveLanguageDuringReload` is set to true and flexlang saved the language in this browser before.
 fallbackToDefaultLanguage | true | In the case there isn't a translation for a specific key in a language (other than `defaultLanguage`) flexlang will load try to load the translation from the `defaultLanguage`.
 reportFallback | false | If this property is set to true, flexlang will report every fallback scenario to the current error handler (can be set through `customErrorHandler` or `flexlangSetCustomErrorHandler(callback)`).
-customKeyAttribute | 'flkey' | With this attribute flexlang detects elements which need a translation. The attribute value is the translation key defined in the resource file. If you don't want to use 'data-flkey' (default) you can set this property to (for example) 'key' and flexlang will search after all elements with attribute 'data-key'.
+customKeyAttribute | "flkey" | With this attribute flexlang detects elements which need a translation. The attribute value is the translation key defined in the resource file. If you don't want to use `data-flkey` (default) you can set this property to (for example) "key" and flexlang will search after all elements with attribute `data-key`.
 saveLanguageDuringReload | true | flexlang will set browser cookies to save languages which will be used in the next init process as inital language for the user.
 downloadingResourcesFinished | undefined | flexlang will use this callback to inform the user when all resources are loaded.
-customErrorHandler | console.log | This function will be called when flexlang whats to log something. All callbacks will be called with a string which contains all informations.<br>Example: `callback('[flexlang.js] This is a information from flexlang to inform my user');`
+customErrorHandler | console.log | This function will be called when flexlang whats to log something. All callbacks will be called with a string which contains all informations.<br>Example call from flexlang: `callback('[flexlang.js] This is a information from flexlang to inform my user');`
 
 # Functions
 
