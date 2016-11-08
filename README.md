@@ -71,7 +71,8 @@ flexlangInit({
     reportFallback: true,
     customKeyAttribute: "flkey",
     saveLanguageDuringReload: true,
-    downloadingResourcesFinished: console.log
+    downloadingResourcesFinished: undefined,
+    customErrorHandler: console.log
 });
 ```
 
