@@ -29,7 +29,7 @@ function flexlangChangeLanguage(languageId) {
     var dataAttrName = 'data-flkey';
     if (_fl_init.customKeyAttribute !== undefined)
         dataAttrName = 'data-' + _fl_init.customKeyAttribute;
-        
+
     var all = $('[' + dataAttrName + ']');
     for (var i = 0; i < all.length; i++) {
         var key = all[i].getAttribute(dataAttrName);
