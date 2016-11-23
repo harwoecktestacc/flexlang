@@ -14,7 +14,7 @@
     <img src="https://img.shields.io/badge/copyright-florian%20harwoeck%202016-red.svg" alt="copyright">
 </p>
 
-## Introduction
+# Introduction
 flexlang is a JavaScript plugin which allows developers to make their total website mutli language ready in just a few steps. Not only multi language loading is supported, also the process of translation itself is implemented within the plugin. For this a complete modern UI with all current translations, which can be edited directly, is rendered.
 
 ### Advantages
@@ -25,7 +25,10 @@ flexlang is a JavaScript plugin which allows developers to make their total webs
 * Improves page loads (Browser caching translation resource files)
 * Transfer the process of searching the right translation to your clients instead of doing it on your server
 
-## Keys
+# Live Demo
+[Live Demo from one of our users (thebotchallenge.com)](https://thebotchallenge.com)
+
+# Keys
 flexlang uses unique keys to search through the translation resources. Those keys are stored in the `data-flkey` attribute of the element you want the translation into.
 
 Example:
@@ -33,7 +36,7 @@ Example:
 <p data-flkey="welcome_text"></p>
 ```
 
-## Resources
+# Resources
 flexlang uses a json format in which all translations are stored in a list called `keys`. In this list each translation has a single string array. Index 0 of the array is the key of the translation itself. Afterwards all translated texts are placed.
 
 Example:
@@ -45,7 +48,7 @@ Example:
 }
 ```
 
-## Load translations
+# Load translations
 ```javascript
 flexlangInit({
     resources: [
@@ -65,20 +68,40 @@ flexlangInit({
 
     defaultLanguage: "en",
     fallbackToDefaultLanguage: true,
-    reportFallback: true
+    reportFallback: true,
+    customKeyAttribute: "flkey",
+    saveLanguageDuringReload: true,
+    downloadingResourcesFinished: undefined,
+    customErrorHandler: console.log
 });
 ```
 
-## Change language
+### Options
+Argument | Default value | Description
+-------- | ------------- | -----------
+defaultLanguage | languages[0].id | This language will be loaded after downloading resources. Except: `saveLanguageDuringReload` is set to true and flexlang saved the language in this browser before.
+fallbackToDefaultLanguage | true | In the case there isn't a translation for a specific key in a language (other than `defaultLanguage`) flexlang will load try to load the translation from the `defaultLanguage`.
+reportFallback | false | If this property is set to true, flexlang will report every fallback scenario to the current error handler (can be set through `customErrorHandler` or `flexlangSetCustomErrorHandler(callback)`).
+customKeyAttribute | "flkey" | With this attribute flexlang detects elements which need a translation. The attribute value is the translation key defined in the resource file. If you don't want to use `data-flkey` (default) you can set this property to (for example) "key" and flexlang will search after all elements with attribute `data-key`.
+saveLanguageDuringReload | true | flexlang will set browser cookies to save languages which will be used in the next init process as inital language for the user.
+downloadingResourcesFinished | undefined | flexlang will use this callback to inform the user when all resources are loaded.
+customErrorHandler | console.log | This function will be called when flexlang whats to log something. All callbacks will be called with a string which contains all informations.<br>Example call from flexlang: `callback('[flexlang.js] This is a information from flexlang to inform my user');`
+
+# Functions
+
 ```javascript
+flexlangInit(object);
 flexlangChangeLanguage('de');
+flexlangTranslate(key, language); // Returns the key translated into the language. Exception: return undefined (see log)
+flexlangSetCustomErrorHandler(callback);
+flexlangGetCurrentLanguage(); // Returns current language. Exception: return undefined (see log)
 ```
 
-## Dependencies
+# Dependencies
 * jQuery
 * Bootstrap CSS (only if UI is needed) 
 
-## License 
+# License 
 MIT License
 
 Copyright (c) 2016 Florian Harwöck
