@@ -63,7 +63,7 @@ function flexlangChangeLanguage(languageId) {
                 }
             }
         }
-        else 
+        else
             $(all[i]).html(trans);
     }
 }
@@ -100,7 +100,7 @@ function flexlangGetCurrentLanguage() {
 }
 
 /*
- * PRIVATE 
+ * PRIVATE
  */
 var _fl_init;
 var _fl_errorHandler = console.log;
@@ -154,6 +154,7 @@ function _fl_initSecondPart() {
             if (temp !== '') {
                 if (_fl_init.defaultLanguage === undefined)
                     _fl_init.defaultLanguage = _fl_init.languages[0].id;
+                _fl_setCookie('flexlang_language', temp, 365);
                 flexlangChangeLanguage(temp);
                 return;
             }
