@@ -1,23 +1,21 @@
 "use strict";
 class Flexlang {
-    constructor(init) {
-        this.init = init;
-        this.logger = console.log;
+    constructor(settings) {
+        this.settings = settings;
     }
-    get Logger() { return this.logger; }
+    get Logger() { return this.settings.Logger; }
     ;
-    set Logger(logger) { this.logger = logger; }
+    set Logger(logger) { this.settings.Logger = logger; }
     ;
     get CurrentLanguage() { return this.currentLang; }
     ;
     changeLanguage(language) {
         this.currentLang = language;
-        DocumentType[];
-        all = $('');
+        let elements = $('');
     }
     translate(key, language) {
         return "";
     }
 }
 Flexlang.GITHUB_REPO = "https://github.com/harwoeck/flexlang";
-//# sourceMappingURL=Flexlang.js.map
+//# sourceMappingURL=flexlang.js.map
