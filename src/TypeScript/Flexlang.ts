@@ -18,6 +18,9 @@ class Flexlang {
   // Properties
   public get Logger() : FlexlangLogger { return this.settings.Logger; };
   public set Logger(logger : FlexlangLogger) { this.settings.Logger = logger; };
+  /**
+   * The current language of the website
+   */
   public get CurrentLanguage() : String { return this.currentLang; };
 
   // Constructor
